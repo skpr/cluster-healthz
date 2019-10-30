@@ -25,4 +25,4 @@ jobs:
     steps:
       - checkout
       - run: |
-          make test-unit
+          make test
