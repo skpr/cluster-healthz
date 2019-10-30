@@ -13,6 +13,7 @@ import (
 
 var (
 	cliConfig = kingpin.Flag("config", "Path to the Kubernetes config file").Short('c').String()
+	cliToken = kingpin.Flag("token", "Token used for authentication").Required().Envar("CLUSTER_HEALTHZ_TOKEN").String()
 )
 
 func main() {
@@ -21,20 +22,29 @@ func main() {
 	r := gin.Default()
 
 	r.GET("/healthz", func(c *gin.Context) {
+
+		if c.Query("token") != *cliToken {
+			c.String(http.StatusForbidden, "Access denied")
+			return
+		}
+
 		config, err := clientcmd.BuildConfigFromFlags("", *cliConfig)
 		if err != nil {
+			c.String(http.StatusInternalServerError, err.Error())
 			c.Error(err)
 			return
 		}
 
 		clientset, err := kubernetes.NewForConfig(config)
 		if err != nil {
+			c.String(http.StatusInternalServerError, err.Error())
 			c.Error(err)
 			return
 		}
 
 		resp, err := checks.ErrorList(clientset)
 		if err != nil {
+			c.String(http.StatusInternalServerError, err.Error())
 			c.Error(err)
 			return
 		}
