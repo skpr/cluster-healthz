@@ -9,8 +9,8 @@ import (
 )
 
 // NodeStatus reviews the status of all Node objects.
-func NodeStatus(clientset kubernetes.Interface) ([]Error, error) {
-	var list []Error
+func NodeStatus(clientset kubernetes.Interface) ([]Issue, error) {
+	var list []Issue
 
 	nodes, err := clientset.CoreV1().Nodes().List(metav1.ListOptions{})
 	if err != nil {
@@ -20,7 +20,7 @@ func NodeStatus(clientset kubernetes.Interface) ([]Error, error) {
 	for _, node := range nodes.Items {
 		for _, condition := range node.Status.Conditions {
 			if condition.Type == corev1.NodeReady && condition.Status == corev1.ConditionFalse {
-				list = append(list, Error{
+				list = append(list, Issue{
 					Name:        node.ObjectMeta.Name,
 					Issue:       "NodeNotReady",
 					Description: "The kubelet is not healthy or ready to accept pods.",

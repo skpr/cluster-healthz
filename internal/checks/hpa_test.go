@@ -49,10 +49,10 @@ func TestAutoscalerStatus(t *testing.T) {
 		assert.Nil(t, err)
 	}
 
-	errors, err := AutoscalerStatus(clientset)
+	issues, err := AutoscalerStatus(clientset)
 	assert.Nil(t, err)
 
-	expected := []Error{
+	expected := []Issue{
 		{
 			Namespace:   "test",
 			Name:        "fail",
@@ -62,5 +62,5 @@ func TestAutoscalerStatus(t *testing.T) {
 		},
 	}
 
-	assert.Equal(t, expected, errors)
+	assert.Equal(t, expected, issues)
 }

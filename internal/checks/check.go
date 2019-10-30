@@ -4,22 +4,22 @@ import (
 	"k8s.io/client-go/kubernetes"
 )
 
-// ErrorList from all checks.
-func ErrorList(clientset kubernetes.Interface) ([]Error, error) {
-	var list []Error
+// IssueList from all checks.
+func IssueList(clientset kubernetes.Interface) ([]Issue, error) {
+	var list []Issue
 
-	funcs := []func(clientset kubernetes.Interface) ([]Error, error){
+	funcs := []func(clientset kubernetes.Interface) ([]Issue, error){
 		AutoscalerStatus,
 		NodeStatus,
 	}
 
 	for _, f := range funcs {
-		errors, err := f(clientset)
+		issues, err := f(clientset)
 		if err != nil {
 			return list, err
 		}
 
-		list = append(list, errors...)
+		list = append(list, issues...)
 	}
 
 	return list, nil

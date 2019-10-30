@@ -42,7 +42,7 @@ func main() {
 			return
 		}
 
-		resp, err := checks.ErrorList(clientset)
+		resp, err := checks.IssueList(clientset)
 		if err != nil {
 			c.String(http.StatusInternalServerError, err.Error())
 			c.Error(err)

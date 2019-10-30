@@ -1,15 +1,10 @@
 package checks
 
-import "k8s.io/client-go/kubernetes"
-
-type Check interface {
-	Errors(kubernetes.Interface) ([]Error, error)
-}
-
-type Error struct {
-	Namespace   string
-	Name        string
-	Issue       string
-	Description string
-	Command     string
+// Issue which is will be exposed.
+type Issue struct {
+	Namespace   string `json:"namespace,omitempty"`
+	Name        string `json:"name"`
+	Issue       string `json:"issue"`
+	Description string `json:"description"`
+	Command     string `json:"command"`
 }

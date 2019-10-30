@@ -46,10 +46,10 @@ func TestNodeStatus(t *testing.T) {
 		assert.Nil(t, err)
 	}
 
-	errors, err := NodeStatus(clientset)
+	issues, err := NodeStatus(clientset)
 	assert.Nil(t, err)
 
-	expected := []Error{
+	expected := []Issue{
 		{
 			Name:        "fail",
 			Issue:       "NodeNotReady",
@@ -58,5 +58,5 @@ func TestNodeStatus(t *testing.T) {
 		},
 	}
 
-	assert.Equal(t, expected, errors)
+	assert.Equal(t, expected, issues)
 }
