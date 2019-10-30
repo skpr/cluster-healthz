@@ -4,9 +4,9 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"gopkg.in/alecthomas/kingpin.v2"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/tools/clientcmd"
-	"gopkg.in/alecthomas/kingpin.v2"
 
 	"github.com/skpr/cluster-healthz/internal/checks"
 )

@@ -25,6 +25,7 @@ func AutoscalerStatus(clientset kubernetes.Interface) ([]Error, error) {
 					Namespace: hpa.ObjectMeta.Namespace,
 					Name:        hpa.ObjectMeta.Name,
 					Issue:       "NodeScalingIssue",
+					Description:  "The HPA controller is unable to scale if necessary",
 					Command: fmt.Sprintf("kubectl -n %s describe hpa %s", hpa.ObjectMeta.Namespace, hpa.ObjectMeta.Name),
 				})
 			}

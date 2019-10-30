@@ -3,8 +3,8 @@ package checks
 import (
 	"fmt"
 
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	corev1 "k8s.io/api/core/v1"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
 )
 
@@ -23,7 +23,7 @@ func NodeStatus(clientset kubernetes.Interface) ([]Error, error) {
 				list = append(list, Error{
 					Name:        node.ObjectMeta.Name,
 					Issue:       "NodeNotReady",
-					Description: fmt.Sprintf("Node has status: %s", node.Status.Phase),
+					Description: "The kubelet is not healthy or ready to accept pods.",
 					Command: fmt.Sprintf("kubectl describe node %s", node.ObjectMeta.Name),
 				})
 			}
