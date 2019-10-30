@@ -17,12 +17,12 @@ func TestAutoscalerStatus(t *testing.T) {
 		{
 			ObjectMeta: metav1.ObjectMeta{
 				Namespace: "test",
-				Name: "pass",
+				Name:      "pass",
 			},
 			Status: autoscalingv2beta2.HorizontalPodAutoscalerStatus{
 				Conditions: []autoscalingv2beta2.HorizontalPodAutoscalerCondition{
 					{
-						Type:autoscalingv2beta2.ScalingActive,
+						Type:   autoscalingv2beta2.ScalingActive,
 						Status: corev1.ConditionTrue,
 					},
 				},
@@ -31,12 +31,12 @@ func TestAutoscalerStatus(t *testing.T) {
 		{
 			ObjectMeta: metav1.ObjectMeta{
 				Namespace: "test",
-				Name: "fail",
+				Name:      "fail",
 			},
 			Status: autoscalingv2beta2.HorizontalPodAutoscalerStatus{
 				Conditions: []autoscalingv2beta2.HorizontalPodAutoscalerCondition{
 					{
-						Type:autoscalingv2beta2.ScalingActive,
+						Type:   autoscalingv2beta2.ScalingActive,
 						Status: corev1.ConditionFalse,
 					},
 				},
@@ -54,11 +54,11 @@ func TestAutoscalerStatus(t *testing.T) {
 
 	expected := []Error{
 		{
-			Namespace: "test",
-			Name: "fail",
-			Issue: "NodeScalingIssue",
+			Namespace:   "test",
+			Name:        "fail",
+			Issue:       "NodeScalingIssue",
 			Description: "The HPA controller is unable to scale if necessary",
-			Command: "kubectl -n test describe hpa fail",
+			Command:     "kubectl -n test describe hpa fail",
 		},
 	}
 

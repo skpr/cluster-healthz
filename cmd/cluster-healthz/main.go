@@ -13,7 +13,7 @@ import (
 
 var (
 	cliConfig = kingpin.Flag("config", "Path to the Kubernetes config file").Short('c').String()
-	cliToken = kingpin.Flag("token", "Token used for authentication").Required().Envar("CLUSTER_HEALTHZ_TOKEN").String()
+	cliToken  = kingpin.Flag("token", "Token used for authentication").Required().Envar("CLUSTER_HEALTHZ_TOKEN").String()
 )
 
 func main() {

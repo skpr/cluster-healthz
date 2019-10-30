@@ -4,7 +4,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
- 	corev1 "k8s.io/api/core/v1"
+	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes/fake"
 )
@@ -18,9 +18,9 @@ func TestNodeStatus(t *testing.T) {
 				Name: "pass",
 			},
 			Status: corev1.NodeStatus{
-				Conditions:      []corev1.NodeCondition{
+				Conditions: []corev1.NodeCondition{
 					{
-						Type: corev1.NodeReady,
+						Type:   corev1.NodeReady,
 						Status: corev1.ConditionTrue,
 					},
 				},
@@ -31,9 +31,9 @@ func TestNodeStatus(t *testing.T) {
 				Name: "fail",
 			},
 			Status: corev1.NodeStatus{
-				Conditions:      []corev1.NodeCondition{
+				Conditions: []corev1.NodeCondition{
 					{
-						Type: corev1.NodeReady,
+						Type:   corev1.NodeReady,
 						Status: corev1.ConditionFalse,
 					},
 				},
@@ -51,10 +51,10 @@ func TestNodeStatus(t *testing.T) {
 
 	expected := []Error{
 		{
-			Name: "fail",
-			Issue: "NodeNotReady",
+			Name:        "fail",
+			Issue:       "NodeNotReady",
 			Description: "The kubelet is not healthy or ready to accept pods.",
-			Command: "kubectl describe node fail",
+			Command:     "kubectl describe node fail",
 		},
 	}
 

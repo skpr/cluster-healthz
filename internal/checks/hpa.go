@@ -3,9 +3,9 @@ package checks
 import (
 	"fmt"
 
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	corev1 "k8s.io/api/core/v1"
 	autoscalingv2beta2 "k8s.io/api/autoscaling/v2beta2"
+	corev1 "k8s.io/api/core/v1"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
 )
 
@@ -22,11 +22,11 @@ func AutoscalerStatus(clientset kubernetes.Interface) ([]Error, error) {
 		for _, condition := range hpa.Status.Conditions {
 			if condition.Type == autoscalingv2beta2.ScalingActive && condition.Status == corev1.ConditionFalse {
 				list = append(list, Error{
-					Namespace: hpa.ObjectMeta.Namespace,
+					Namespace:   hpa.ObjectMeta.Namespace,
 					Name:        hpa.ObjectMeta.Name,
 					Issue:       "NodeScalingIssue",
-					Description:  "The HPA controller is unable to scale if necessary",
-					Command: fmt.Sprintf("kubectl -n %s describe hpa %s", hpa.ObjectMeta.Namespace, hpa.ObjectMeta.Name),
+					Description: "The HPA controller is unable to scale if necessary",
+					Command:     fmt.Sprintf("kubectl -n %s describe hpa %s", hpa.ObjectMeta.Namespace, hpa.ObjectMeta.Name),
 				})
 			}
 		}

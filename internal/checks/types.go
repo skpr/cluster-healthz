@@ -7,9 +7,9 @@ type Check interface {
 }
 
 type Error struct {
-	Namespace string
-	Name string
-	Issue string
+	Namespace   string
+	Name        string
+	Issue       string
 	Description string
-	Command string
+	Command     string
 }

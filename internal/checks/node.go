@@ -24,7 +24,7 @@ func NodeStatus(clientset kubernetes.Interface) ([]Error, error) {
 					Name:        node.ObjectMeta.Name,
 					Issue:       "NodeNotReady",
 					Description: "The kubelet is not healthy or ready to accept pods.",
-					Command: fmt.Sprintf("kubectl describe node %s", node.ObjectMeta.Name),
+					Command:     fmt.Sprintf("kubectl describe node %s", node.ObjectMeta.Name),
 				})
 			}
 		}
