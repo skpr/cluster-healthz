@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/prometheus/common/log"
 	"gopkg.in/alecthomas/kingpin.v2"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/tools/clientcmd"
@@ -42,15 +43,20 @@ func main() {
 			return
 		}
 
-		resp, err := checks.IssueList(clientset)
+		issues, err := checks.IssueList(clientset)
 		if err != nil {
 			c.String(http.StatusInternalServerError, err.Error())
 			c.Error(err)
 			return
 		}
 
-		if len(resp) > 0 {
-			c.JSON(http.StatusInternalServerError, resp)
+		if len(issues) > 0 {
+			c.JSON(http.StatusInternalServerError, issues)
+
+			for _, issue := range issues {
+				log.With("issue", issue.Issue).With("name", issue.Name).With("namespace", issue.Namespace).Error(issue.Description)
+			}
+
 			return
 		}
 
