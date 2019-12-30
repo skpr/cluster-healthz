@@ -10,6 +10,7 @@ func IssueList(clientset kubernetes.Interface) ([]Issue, error) {
 
 	funcs := []func(clientset kubernetes.Interface) ([]Issue, error){
 		AutoscalerStatus,
+		PodCrashLoopBackOff,
 		NodeStatus,
 	}
 
