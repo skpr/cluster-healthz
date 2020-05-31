@@ -2,6 +2,7 @@ package checks
 
 import (
 	"testing"
+	"time"
 
 	"github.com/stretchr/testify/assert"
 	corev1 "k8s.io/api/core/v1"
@@ -16,6 +17,7 @@ func TestNodeStatus(t *testing.T) {
 		{
 			ObjectMeta: metav1.ObjectMeta{
 				Name: "pass",
+				CreationTimestamp: metav1.NewTime(time.Now().UTC().AddDate(0, 0, -1)),
 			},
 			Status: corev1.NodeStatus{
 				Conditions: []corev1.NodeCondition{
@@ -29,6 +31,22 @@ func TestNodeStatus(t *testing.T) {
 		{
 			ObjectMeta: metav1.ObjectMeta{
 				Name: "fail",
+				CreationTimestamp: metav1.NewTime(time.Now().UTC().AddDate(0, 0, -1)),
+			},
+			Status: corev1.NodeStatus{
+				Conditions: []corev1.NodeCondition{
+					{
+						Type:   corev1.NodeReady,
+						Status: corev1.ConditionFalse,
+					},
+				},
+			},
+		},
+		{
+			ObjectMeta: metav1.ObjectMeta{
+				Name: "skip",
+				// This time will always trigger a skip.
+				CreationTimestamp: metav1.NewTime(time.Now().UTC()),
 			},
 			Status: corev1.NodeStatus{
 				Conditions: []corev1.NodeCondition{
